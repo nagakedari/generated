@@ -9,6 +9,7 @@ pipeline {
         }
         stage('Install Dependencies') {
             steps {
+                nodejs(nodeJSInstallationName: 'Node 8.10')
                 sh 'npm install'
                 echo "Dependencies are installed"
             }
