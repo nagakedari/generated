@@ -2,6 +2,10 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: For Student lambda
 Resources:
+  DeployArtifactS3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      Role: !GetAtt S3Role
   StudentFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -65,3 +69,15 @@ Resources:
       ManagedPolicyArns:
           - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
     Type: 'AWS::IAM::Role'
+  S3Role:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+          Action:
+          - s3: DeleteObject
+          - s3: GetObject
+          - s3: PutObject
+          Resource: !Join ['',['arn:aws:s3:::', !Ref DeployArtifactS3Bucket]]
