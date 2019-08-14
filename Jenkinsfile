@@ -1,7 +1,9 @@
 pipeline {
-    def bucket = 'DeployArtifactS3Bucket'
-    def region = 'eu-east-1'
-    def functionName = 'StudentFunction'
+    environment {
+        bucket = 'DeployArtifactS3Bucket'
+        region = 'eu-east-1'
+        functionName = 'StudentFunction'
+    }
     agent any
     tools {nodejs "node8"}
     stages {
