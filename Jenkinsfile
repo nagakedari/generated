@@ -26,7 +26,9 @@ pipeline {
         } 
         stage('push artifacts') {
             steps {
-                sh "aws s3 cp dist/api.zip s3://${bucket}"
+                // sh "aws s3 cp dist/api.zip s3://${bucket}"
+                echo "${bucket}"
+                sh "sam package  --output-template-file sam.yaml --s3-bucket ${bucket}"
             }
         }
         stage('deploy') {
