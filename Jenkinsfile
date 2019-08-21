@@ -44,8 +44,7 @@ pipeline {
                            kmsKeyId: '', outputTemplateFile: '', region: 'us-east-1', 
                            roleArn: '', 
                            s3Bucket: 'deployartifacts3bucket', 
-                           s3Prefix: '', 
-                           stackName: 'student-lambda-deploy', 
+                           s3Prefix: '',
                            templateFile: './sam.yml'])
             }
         }
