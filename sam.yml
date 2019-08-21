@@ -2,7 +2,7 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: For Student lambda
 Resources:
-  DeployArtifactS3Bucket:
+  deployartifacts3bucket:
     Type: AWS::S3::Bucket
     Properties:
       Role: !GetAtt S3Role
@@ -80,4 +80,4 @@ Resources:
             - s3: DeleteObject
             - s3: GetObject
             - s3: PutObject
-            Resource: !Join ['',['arn:aws:s3:::', !Ref DeployArtifactS3Bucket]]
+            Resource: !Join ['',['arn:aws:s3:::', !Ref deployartifacts3bucket]]
