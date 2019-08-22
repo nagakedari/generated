@@ -68,7 +68,9 @@ Resources:
           - Action:
               - 'cloudformation:*'
             Effect: Allow
-            Resource: '*'
+            Principal:
+              Service:
+                - AmazonCloudFormation
         Version: 2012-10-17
       Path: /
       ManagedPolicyArns:
