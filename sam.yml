@@ -55,6 +55,7 @@ Resources:
                 httpMethod: POST
                 type: aws_proxy
   StudentLambdaRole:
+    Type: 'AWS::IAM::Role'
     Properties:
       AssumeRolePolicyDocument:
         Statement:
@@ -69,7 +70,6 @@ Resources:
       ManagedPolicyArns:
           - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
           - arn:aws:iam::aws:policy/AWSCloudFormationFullAccess
-    Type: 'AWS::IAM::Role'
   S3Role:
     Type: AWS::IAM::Role
     Properties:
