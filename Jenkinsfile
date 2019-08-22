@@ -45,7 +45,7 @@ pipeline {
                            roleArn: '', 
                            s3Bucket: 'deployartifacts3bucket', 
                            s3Prefix: '', 
-                           stackName: 'development', 
+                           stackName: 'dev', 
                            templateFile: './sam.yml'])
             }
         }
