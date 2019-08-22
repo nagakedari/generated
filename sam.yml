@@ -61,11 +61,14 @@ Resources:
         Statement:
           - Action:
               - 'sts:AssumeRole'
-              - 'cloudformation:*'
             Effect: Allow
             Principal:
               Service:
                 - lambda.amazonaws.com
+          - Action:
+              - 'cloudformation:*'
+            Effect: Allow
+            Resource: '*'
         Version: 2012-10-17
       Path: /
       ManagedPolicyArns:
