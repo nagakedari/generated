@@ -60,7 +60,7 @@ Resources:
         Statement:
           - Action:
               - 'sts:AssumeRole'
-              - cloudformation: *
+              - 'cloudformation: *'
             Effect: Allow
             Principal:
               Service:
