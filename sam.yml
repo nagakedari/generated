@@ -17,13 +17,13 @@ Resources:
         CollectionApi:
           Type: Api
           Properties:
-            RestApiId: !Ref RestAPI
             Method: any
-        # ItemApi:
-        #   Type: Api
-        #   Properties:
-        #     RestApiId: !Ref RestAPI
-        #     Method: any
+            Path: /students
+        ItemApi:
+          Type: Api
+          Properties:
+            Method: any
+            Path: /students/{id}
   RestAPI:
     Type: 'AWS::Serverless::Api'
     Properties:
@@ -35,25 +35,31 @@ Resources:
         basePath: /
         schemes:
           - https
-        paths:
-          /students:
-            any:
-              responses: {}
-              x-amazon-apigateway-integration:
-                uri: !Sub >-
-                  arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${StudentFunction.Arn}/invocations
-                passthroughBehavior: when_no_match
-                httpMethod: POST
-                type: aws_proxy
-          /students/{id}:
-            any:
-              responses: {}
-              x-amazon-apigateway-integration:
-                uri: !Sub >-
-                  arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${StudentFunction.Arn}/invocations
-                passthroughBehavior: when_no_match
-                httpMethod: POST
-                type: aws_proxy
+        x-amazon-apigateway-integration:
+          uri: !Sub >-
+            arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${StudentFunction.Arn}/invocations
+          passthroughBehavior: when_no_match
+          httpMethod: POST
+          type: aws_proxy        
+        # paths:
+        #   /students:
+        #     any:
+        #       responses: {}
+        #       x-amazon-apigateway-integration:
+        #         uri: !Sub >-
+        #           arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${StudentFunction.Arn}/invocations
+        #         passthroughBehavior: when_no_match
+        #         httpMethod: POST
+        #         type: aws_proxy
+        #   /students/{id}:
+        #     any:
+        #       responses: {}
+        #       x-amazon-apigateway-integration:
+        #         uri: !Sub >-
+        #           arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${StudentFunction.Arn}/invocations
+        #         passthroughBehavior: when_no_match
+        #         httpMethod: POST
+        #         type: aws_proxy
   StudentLambdaRole:
     Type: 'AWS::IAM::Role'
     Properties:
