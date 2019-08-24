@@ -31,7 +31,7 @@ Resources:
       DefinitionBody:
         swagger: '2.0'
         info:
-          title: !Sub '${AWS::StackName}-API'
+          title: StudentAPI
         basePath: /
         schemes:
           - https
