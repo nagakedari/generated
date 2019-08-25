@@ -2,10 +2,10 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: For Student lambda
 Resources:
-  deployartifacts3bucket:
+  testdeployartifacts3bucket:
     Type: AWS::S3::Bucket
     Properties:
-      Role: !GetAtt S3Role
+      Role: !GetAtt S3Role.Arn
   StudentFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -26,6 +26,9 @@ Resources:
             RestApiId: !Ref RestAPI
             Method: any
             Path: /students/{id}
+      Environment:
+        Variables:
+          DBURL: 'mongodb+srv://mongo_user:wAAbUC36OzKcm0hN@cluster0-knpmq.mongodb.net/boilerplate'
   RestAPI:
     Type: 'AWS::Serverless::Api'
     Properties:
@@ -38,15 +41,15 @@ Resources:
         schemes:
           - https
         paths:
-          /:
-          any:
-            x-amazon-apigateway-integration:
-              uri: !Sub >-
-                arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${StudentFunction.Arn}/invocations
-              passthroughBehavior: when_no_match
-              httpMethod: POST
-              type: aws_proxy
-                
+          /students:
+            get:
+              response: {}
+              x-amazon-apigateway-integration:
+                uri: !Sub >-
+                  arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${StudentFunction.Arn}/invocations
+                passthroughBehavior: when_no_match
+                httpMethod: POST
+                type: aws_proxy
         # paths:
         #   /students:
         #     any:
@@ -77,12 +80,12 @@ Resources:
             Principal:
               Service:
                 - lambda.amazonaws.com
-          - Action:
-              - 'cloudformation:*'
-            Effect: Allow
-            Principal:
-              Service:
-                - AmazonCloudFormation
+          # - Action:
+          #     - 'cloudformation:*'
+          #   Effect: Allow
+          #   Principal:
+          #     Service:
+          #       - AmazonCloudFormation
         Version: 2012-10-17
       Path: /
       ManagedPolicyArns:
@@ -99,4 +102,4 @@ Resources:
             - s3: DeleteObject
             - s3: GetObject
             - s3: PutObject
-            Resource: !Join ['',['arn:aws:s3:::', !Ref deployartifacts3bucket]]
+            Resource: !Join ['',['arn:aws:s3:::', !Ref testdeployartifacts3bucket]]

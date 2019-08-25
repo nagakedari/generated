@@ -1,0 +1,91 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: For Student lambda
+Resources:
+  # deployartifacts3bucket:
+  #   Type: AWS::S3::Bucket
+  #   Properties:
+  #     Role:
+  #       Fn::GetAtt:
+  #       - S3Role
+  StudentFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: index.handler
+      CodeUri: s3://kedari-test-lambda-deploy/53d7027e64eb4d88b7bc025663e9b7dc
+      Runtime: nodejs8.10
+      Role:
+        Fn::GetAtt:
+        - StudentLambdaRole
+        - Arn
+      Events:
+        CollectionApi:
+          Type: Api
+          Properties:
+            RestApiId:
+              Ref: RestAPI
+            Method: any
+            Path: /students
+        ItemApi:
+          Type: Api
+          Properties:
+            RestApiId:
+              Ref: RestAPI
+            Method: any
+            Path: /students/{id}
+      Environment:
+        Variables:
+          DBURL: 'mongodb+srv://mongo_user:wAAbUC36OzKcm0hN@cluster0-knpmq.mongodb.net/boilerplate'
+  RestAPI:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: prod
+      DefinitionBody:
+        swagger: '2.0'
+        info:
+          title: StudentAPI
+        basePath: /
+        schemes:
+        - https
+        paths:
+          /students:
+            get:
+              responses: {}
+              x-amazon-apigateway-integration:
+                uri:
+                  Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${StudentFunction.Arn}/invocations
+                passthroughBehavior: when_no_match
+                httpMethod: POST
+                type: aws_proxy    
+  StudentLambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+        - Action:
+          - sts:AssumeRole
+          Effect: Allow
+          Principal:
+            Service:
+            - lambda.amazonaws.com
+        Version: 2012-10-17
+      Path: /
+      ManagedPolicyArns:
+      - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      - arn:aws:iam::aws:policy/AWSCloudFormationFullAccess
+  # S3Role:
+  #   Type: AWS::IAM::Role
+  #   Properties:
+  #     AssumeRolePolicyDocument:
+  #       Version: 2012-10-17
+  #       Statement:
+  #       - Effect: Allow
+  #         Action:
+  #         - s3: DeleteObject
+  #         - s3: GetObject
+  #         - s3: PutObject
+  #         Resource:
+  #           Fn::Join:
+  #           - ''
+  #           - - 'arn:aws:s3:::'
+  #             - Ref: deployartifacts3bucket
