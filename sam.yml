@@ -85,7 +85,7 @@ Resources:
               - 'lambda:PublishVersion'
               - 'lambda:UpdateAlias'
             Effect: Allow
-            Resource: *
+            Resource: '*'
         Version: 2012-10-17
       Path: /
       ManagedPolicyArns:
