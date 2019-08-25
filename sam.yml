@@ -80,12 +80,12 @@ Resources:
             Principal:
               Service:
                 - lambda.amazonaws.com
-          # - Action:
-          #     - 'cloudformation:*'
-          #   Effect: Allow
-          #   Principal:
-          #     Service:
-          #       - AmazonCloudFormation
+          - Action:
+              - 'lambda:UpdateFunctionCode'
+              - 'lambda:PublishVersion'
+              - 'lambda:UpdateAlias'
+            Effect: Allow
+            Resource: *
         Version: 2012-10-17
       Path: /
       ManagedPolicyArns:
