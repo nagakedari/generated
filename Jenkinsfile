@@ -43,6 +43,8 @@ pipeline {
                 samDeploy([credentialsId: '8829efd3-1754-460b-9a1a-fa7755e1d212', 
                            kmsKeyId: '', outputTemplateFile: 'sam-output.yml', region: 'us-east-1', 
                            roleArn: '', 
+                           s3Bucket: 'testdeployartifacts3bucket', 
+                           s3Prefix: '', 
                            stackName: 'dev', 
                            templateFile: './sam.yml'])
             }
