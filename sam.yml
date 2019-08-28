@@ -1,10 +1,10 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: For Student lambda
-Parameters:
-  Version:
-    Type: string
-    Value: 1.0
+# Parameters:
+#   Version:
+#     Type: string
+#     Value: 1.0
 Resources:
   testdeployartifacts3bucket:
     Type: AWS::S3::Bucket
@@ -16,7 +16,7 @@ Resources:
       Handler: index.handler
       CodeUri: 
         Bucket: !Ref testdeployartifacts3bucket
-        Key: !Sub '/${Version}/dist/api.zip'
+        Key: !Sub '/1.0/dist/api.zip'
       Runtime: nodejs8.10
       Role: !GetAtt StudentLambdaRole.Arn
       Events:
