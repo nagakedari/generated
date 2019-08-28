@@ -14,9 +14,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: index.handler
-      CodeUri: s3://kedari-test-lambda-deploy/53d7027e64eb4d88b7bc025663e9b7dc
-        # Bucket: kedarideployartifacts3bucket
-        # Key: '/dist/api.zip'
+      CodeUri: .
       Runtime: nodejs8.10
       Role: !GetAtt StudentLambdaRole.Arn
       Events:

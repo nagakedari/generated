@@ -49,7 +49,7 @@ Resources:
         - https
         paths:
           /students:
-            get:
+            any:
               responses: {}
               x-amazon-apigateway-integration:
                 uri:
