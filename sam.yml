@@ -1,16 +1,22 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: For Student lambda
+Parameters:
+  Version:
+    Type: string
+    Value: 1.0
 Resources:
   testdeployartifacts3bucket:
     Type: AWS::S3::Bucket
-    Properties:
-      Role: !GetAtt S3Role.Arn
+    # Properties:
+    #   Role: !GetAtt S3Role.Arn
   StudentFunction:
     Type: AWS::Serverless::Function
     Properties:
       Handler: index.handler
-      CodeUri: './dist/api.zip'
+      CodeUri: 
+        Bucket: !Ref testdeployartifacts3bucket
+        Key: !Sub '/${Version}/dist/api.zip'
       Runtime: nodejs8.10
       Role: !GetAtt StudentLambdaRole.Arn
       Events:
@@ -80,17 +86,10 @@ Resources:
             Principal:
               Service:
                 - lambda.amazonaws.com
-          - Action:
-              - 'lambda:UpdateFunctionCode'
-              - 'lambda:PublishVersion'
-              - 'lambda:UpdateAlias'
-            Effect: Allow
-            Resource: '*'
         Version: 2012-10-17
       Path: /
       ManagedPolicyArns:
           - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
-          - arn:aws:iam::aws:policy/AWSCloudFormationFullAccess
   S3Role:
     Type: AWS::IAM::Role
     Properties:
