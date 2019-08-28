@@ -6,7 +6,7 @@ Description: For Student lambda
 #     Type: string
 #     Value: 1.0
 Resources:
-  testdeployartifacts3bucket:
+  kedarideployartifacts3bucket:
     Type: AWS::S3::Bucket
     # Properties:
     #   Role: !GetAtt S3Role.Arn
@@ -15,7 +15,7 @@ Resources:
     Properties:
       Handler: index.handler
       CodeUri: 
-        Bucket: !Ref testdeployartifacts3bucket
+        Bucket: !Ref kedarideployartifacts3bucket
         Key: '/dist/api.zip'
       Runtime: nodejs8.10
       Role: !GetAtt StudentLambdaRole.Arn
@@ -101,4 +101,4 @@ Resources:
             - s3: DeleteObject
             - s3: GetObject
             - s3: PutObject
-            Resource: !Join ['',['arn:aws:s3:::', !Ref testdeployartifacts3bucket]]
+            Resource: !Join ['',['arn:aws:s3:::', !Ref kedarideployartifacts3bucket]]
