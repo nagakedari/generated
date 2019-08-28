@@ -15,7 +15,7 @@ Resources:
     Properties:
       Handler: index.handler
       CodeUri: 
-        Bucket: !Ref kedarideployartifacts3bucket
+        Bucket: kedarideployartifacts3bucket
         Key: '/dist/api.zip'
       Runtime: nodejs8.10
       Role: !GetAtt StudentLambdaRole.Arn
