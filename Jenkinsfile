@@ -45,7 +45,7 @@ pipeline {
                            roleArn: '', 
                            s3Bucket: 'kedarideployartifacts3bucket', 
                            s3Prefix: '', 
-                           stackName: 'devlambda', 
+                           stackName: 'dev1', 
                            templateFile: './sam.yml'])
             }
         }
