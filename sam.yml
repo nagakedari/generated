@@ -16,7 +16,7 @@ Resources:
       Handler: index.handler
       CodeUri: .
       Runtime: nodejs8.10
-      Role: !GetAtt StudentLambdaRole.Arn
+      # Role: !GetAtt StudentLambdaRole.Arn
       Events:
         CollectionApi:
           Type: Api
@@ -73,30 +73,30 @@ Resources:
         #         passthroughBehavior: when_no_match
         #         httpMethod: POST
         #         type: aws_proxy
-  StudentLambdaRole:
-    Type: 'AWS::IAM::Role'
-    Properties:
-      AssumeRolePolicyDocument:
-        Statement:
-          - Action:
-              - 'sts:AssumeRole'
-            Effect: Allow
-            Principal:
-              Service:
-                - lambda.amazonaws.com
-        Version: 2012-10-17
-      Path: /
-      ManagedPolicyArns:
-          - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
-  S3Role:
-    Type: AWS::IAM::Role
-    Properties:
-      AssumeRolePolicyDocument:
-        Version: 2012-10-17
-        Statement:
-          - Effect: Allow
-            Action:
-            - s3: DeleteObject
-            - s3: GetObject
-            - s3: PutObject
-            Resource: !Join ['',['arn:aws:s3:::', !Ref kedarideployartifacts3bucket]]
+  # StudentLambdaRole:
+  #   Type: 'AWS::IAM::Role'
+  #   Properties:
+  #     AssumeRolePolicyDocument:
+  #       Statement:
+  #         - Action:
+  #             - 'sts:AssumeRole'
+  #           Effect: Allow
+  #           Principal:
+  #             Service:
+  #               - lambda.amazonaws.com
+  #       Version: 2012-10-17
+  #     Path: /
+  #     ManagedPolicyArns:
+  #         - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+  # S3Role:
+  #   Type: AWS::IAM::Role
+  #   Properties:
+  #     AssumeRolePolicyDocument:
+  #       Version: 2012-10-17
+  #       Statement:
+  #         - Effect: Allow
+  #           Action:
+  #           - s3: DeleteObject
+  #           - s3: GetObject
+  #           - s3: PutObject
+  #           Resource: !Join ['',['arn:aws:s3:::', !Ref kedarideployartifacts3bucket]]
