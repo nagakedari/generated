@@ -29,11 +29,11 @@ pipeline {
         stage('deploy') {
             steps {
                 samDeploy([credentialsId: '8829efd3-1754-460b-9a1a-fa7755e1d212', 
-                           kmsKeyId: '', outputTemplateFile: `${outputFile}`, region: `${region}`,
-                           s3Bucket: `${bucket}`, 
+                           kmsKeyId: '', outputTemplateFile: '${outputFile}', region: '${region}',
+                           s3Bucket: '${bucket}', 
                            s3Prefix: '', 
-                           stackName: `${stackName}`, 
-                           templateFile: `./${templateFile}`])
+                           stackName: '${stackName}', 
+                           templateFile: './${templateFile}'])
             }
         }
     }
