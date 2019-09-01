@@ -1,8 +1,10 @@
 pipeline {
     environment {
-        bucket = 'DeployArtifactS3Bucket'
+        bucket = 'kedarideployartifacts3bucketjenkins'
         region = 'eu-east-1'
-        functionName = 'StudentFunction'
+        stackName = 'dev'
+        templateFile = 'sam.yml'
+        outputFile = 'sam-output.yml'
     }
     agent any
     tools {nodejs "node8"}
@@ -27,12 +29,11 @@ pipeline {
         stage('deploy') {
             steps {
                 samDeploy([credentialsId: '8829efd3-1754-460b-9a1a-fa7755e1d212', 
-                           kmsKeyId: '', outputTemplateFile: 'sam-output.yml', region: 'us-east-1', 
-                        //    roleArn: '', 
-                           s3Bucket: 'kedarideployartifacts3bucketjenkins', 
+                           kmsKeyId: '', outputTemplateFile: `${outputFile}`, region: `${region}`,
+                           s3Bucket: `${bucket}`, 
                            s3Prefix: '', 
-                           stackName: 'dev', 
-                           templateFile: './sam.yml'])
+                           stackName: `${stackName}`, 
+                           templateFile: `./${templateFile}`])
             }
         }
     }
