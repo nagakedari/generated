@@ -1,7 +1,7 @@
 pipeline {
     environment {
         bucket = 'kedarideployartifacts3bucketjenkins'
-        region = 'es-east-1'
+        region = 'us-east-1'
         stackName = 'dev'
         templateFile = 'sam.yml'
         outputFile = 'sam-output.yml'
