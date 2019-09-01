@@ -3,7 +3,7 @@ pipeline {
         credentialsId = '8829efd3-1754-460b-9a1a-fa7755e1d212'
         region = 'us-east-1'
         stackName = 'dev'
-        bucketName = '_deployartifacts3bucket'
+        bucketName = '-deployartifacts3bucket'
         templateFile = 'sam.yml'
         outputFile = 'sam-output.yml'
     }
