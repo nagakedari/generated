@@ -3,7 +3,7 @@ pipeline {
         credentialsId = '8829efd3-1754-460b-9a1a-fa7755e1d212'
         region = 'us-east-1'
         stackName = 'dev'
-        bucketName = stackName+'_deployartifacts3bucket'
+        bucketName = '_deployartifacts3bucket'
         templateFile = 'sam.yml'
         outputFile = 'sam-output.yml'
     }
@@ -34,7 +34,7 @@ pipeline {
                 echo "Deploypment has started ......"
                 samDeploy([credentialsId: credentialsId, 
                            kmsKeyId: '', outputTemplateFile: outputFile, region: region,
-                           s3Bucket: bucketName, 
+                           s3Bucket: stackName+bucketName, 
                            s3Prefix: '', 
                            stackName: stackName, 
                            templateFile: './'+templateFile])
