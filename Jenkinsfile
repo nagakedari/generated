@@ -1,8 +1,9 @@
 pipeline {
     environment {
-        bucket = 'kedarideployartifacts3bucketjenkins'
+        credentialsId = '8829efd3-1754-460b-9a1a-fa7755e1d212'
         region = 'us-east-1'
         stackName = 'dev'
+        bucketName = stackName+'_deployartifacts3bucket'
         templateFile = 'sam.yml'
         outputFile = 'sam-output.yml'
     }
@@ -18,24 +19,26 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 sh 'npm install'
-                echo "Dependencies are installed"
+                echo "dependencies are installed"
             }
         }
         stage('build') {
             steps {
                 sh 'npm run build'
+                sh 'npm run test'
+                echo 'build step completed successfully'
             }
         } 
         stage('deploy') {
             steps {
-                echo outputFile
-                echo './'+templateFile
-                samDeploy([credentialsId: '8829efd3-1754-460b-9a1a-fa7755e1d212', 
+                echo "Deploypment has started ......"
+                samDeploy([credentialsId: credentialsId, 
                            kmsKeyId: '', outputTemplateFile: outputFile, region: region,
-                           s3Bucket: bucket, 
+                           s3Bucket: bucketName, 
                            s3Prefix: '', 
                            stackName: stackName, 
                            templateFile: './'+templateFile])
+                echo "Deploypment finished successfully"
             }
         }
     }
