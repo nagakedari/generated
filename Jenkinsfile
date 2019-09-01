@@ -24,26 +24,12 @@ pipeline {
                 sh 'npm run build'
             }
         } 
-        // stage('push artifacts') {
-        //     steps {
-        //         // sh "aws s3 cp dist/api.zip s3://${bucket}"
-        //         echo "${bucket}"
-        //         sh "sam package  --output-template-file sam.yaml --s3-bucket ${bucket}"
-        //     }
-        // }
         stage('deploy') {
-            // steps {
-            //     sh "aws lambda update-function-code --function-name ${functionName} \
-            //     --s3-bucket ${bucket} \
-            //     --s3-key api.zip \
-            //     --region ${region}"
-            // }
-
             steps {
                 samDeploy([credentialsId: '8829efd3-1754-460b-9a1a-fa7755e1d212', 
                            kmsKeyId: '', outputTemplateFile: 'sam-output.yml', region: 'us-east-1', 
                            roleArn: '', 
-                           s3Bucket: 'kedarideployartifacts3bucket', 
+                           s3Bucket: 'kedarideployartifacts3bucketjenins', 
                            s3Prefix: '', 
                            stackName: 'dev1', 
                            templateFile: './sam.yml'])

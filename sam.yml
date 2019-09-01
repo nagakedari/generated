@@ -1,22 +1,15 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: For Student lambda
-# Parameters:
-#   Version:
-#     Type: string
-#     Value: 1.0
 Resources:
   kedarideployartifacts3bucket:
     Type: AWS::S3::Bucket
-    # Properties:
-    #   Role: !GetAtt S3Role.Arn
   StudentFunction:
     Type: AWS::Serverless::Function
     Properties:
       Handler: index.handler
       CodeUri: ./dist/api.zip
       Runtime: nodejs8.10
-      # Role: !GetAtt StudentLambdaRole.Arn
       Events:
         CollectionApi:
           Type: Api
@@ -73,30 +66,3 @@ Resources:
         #         passthroughBehavior: when_no_match
         #         httpMethod: POST
         #         type: aws_proxy
-  # StudentLambdaRole:
-  #   Type: 'AWS::IAM::Role'
-  #   Properties:
-  #     AssumeRolePolicyDocument:
-  #       Statement:
-  #         - Action:
-  #             - 'sts:AssumeRole'
-  #           Effect: Allow
-  #           Principal:
-  #             Service:
-  #               - lambda.amazonaws.com
-  #       Version: 2012-10-17
-  #     Path: /
-  #     ManagedPolicyArns:
-  #         - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
-  # S3Role:
-  #   Type: AWS::IAM::Role
-  #   Properties:
-  #     AssumeRolePolicyDocument:
-  #       Version: 2012-10-17
-  #       Statement:
-  #         - Effect: Allow
-  #           Action:
-  #           - s3: DeleteObject
-  #           - s3: GetObject
-  #           - s3: PutObject
-  #           Resource: !Join ['',['arn:aws:s3:::', !Ref kedarideployartifacts3bucket]]
