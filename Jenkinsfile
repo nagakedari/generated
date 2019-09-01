@@ -29,6 +29,7 @@ pipeline {
         stage('deploy') {
             steps {
                 echo outputFile
+                echo './'+templateFile
                 samDeploy([credentialsId: '8829efd3-1754-460b-9a1a-fa7755e1d212', 
                            kmsKeyId: '', outputTemplateFile: outputFile, region: region,
                            s3Bucket: bucket, 
