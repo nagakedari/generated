@@ -27,7 +27,7 @@ Resources:
   ApiKey:
     Type: 'AWS::ApiGateway::ApiKey'
     Properties:
-      Name: !Sub '{AWS::StackName}-apiKey'
+      Name: !Sub '${AWS::StackName}-apiKey'
       Description: 'StudentApiKey'
       Enabled: true
       GenerateDistinctId: false
@@ -37,7 +37,7 @@ Resources:
       ApiStages:
         - ApiId: !Ref StudentAPI
           Stage: Stage 
-      UsagePlanName: !Sub '{AWS::StackName}-apiUsagePlan'
+      UsagePlanName: !Sub '${AWS::StackName}-apiUsagePlan'
   ApiUsagePlanKey:
     Type: 'AWS::ApiGateway::UsagePlanKey'
     Properties:
