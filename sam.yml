@@ -24,13 +24,13 @@ Resources:
       Environment:
         Variables:
           DBURL: 'mongodb+srv://mongo_user:wAAbUC36OzKcm0hN@cluster0-knpmq.mongodb.net/boilerplate'
-  # ApiKey:
-  #   Type: 'AWS::ApiGateway::ApiKey'
-  #   Properties:
-  #     Name: !Sub '${AWS::StackName}-apiKey'
-  #     Description: 'StudentApiKey'
-  #     Enabled: true
-  #     GenerateDistinctId: false
+  ApiKey:
+    Type: 'AWS::ApiGateway::ApiKey'
+    Properties:
+      Name: !Sub '${AWS::StackName}-apiKey'
+      Description: 'StudentApiKey'
+      Enabled: true
+      GenerateDistinctId: false
   # ApiUsagePlan:
   #   Type: 'AWS::ApiGateway::UsagePlan'
   #   Properties:
