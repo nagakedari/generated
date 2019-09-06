@@ -24,26 +24,26 @@ Resources:
       Environment:
         Variables:
           DBURL: 'mongodb+srv://mongo_user:wAAbUC36OzKcm0hN@cluster0-knpmq.mongodb.net/boilerplate'
-  ApiKey:
-    Type: 'AWS::ApiGateway::ApiKey'
-    Properties:
-      Name: !Sub '${AWS::StackName}-apiKey'
-      Description: 'StudentApiKey'
-      Enabled: true
-      GenerateDistinctId: false
-  ApiUsagePlan:
-    Type: 'AWS::ApiGateway::UsagePlan'
-    Properties:
-      ApiStages:
-        - ApiId: !Ref StudentAPI
-          Stage: Stage 
-      UsagePlanName: !Sub '${AWS::StackName}-apiUsagePlan'
-  ApiUsagePlanKey:
-    Type: 'AWS::ApiGateway::UsagePlanKey'
-    Properties:
-      KeyId: !Ref ApiKey
-      KeyType: API_KEY
-      UsagePlanId: !Ref ApiUsagePlan
+  # ApiKey:
+  #   Type: 'AWS::ApiGateway::ApiKey'
+  #   Properties:
+  #     Name: !Sub '${AWS::StackName}-apiKey'
+  #     Description: 'StudentApiKey'
+  #     Enabled: true
+  #     GenerateDistinctId: false
+  # ApiUsagePlan:
+  #   Type: 'AWS::ApiGateway::UsagePlan'
+  #   Properties:
+  #     ApiStages:
+  #       - ApiId: !Ref StudentAPI
+  #         Stage: Stage 
+  #     UsagePlanName: !Sub '${AWS::StackName}-apiUsagePlan'
+  # ApiUsagePlanKey:
+  #   Type: 'AWS::ApiGateway::UsagePlanKey'
+  #   Properties:
+  #     KeyId: !Ref ApiKey
+  #     KeyType: API_KEY
+  #     UsagePlanId: !Ref ApiUsagePlan
   RestAPI:
     Type: 'AWS::Serverless::Api'
     Properties:
