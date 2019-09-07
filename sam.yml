@@ -35,7 +35,7 @@ Resources:
     Type: 'AWS::ApiGateway::UsagePlan'
     Properties:
       ApiStages:
-      - ApiId: !Ref StudentAPI
+      - ApiId: !Ref RestAPI
           # Stage: Stage 
       UsagePlanName: !Sub '${AWS::StackName}-apiUsagePlan'
   # ApiUsagePlanKey:
