@@ -33,25 +33,27 @@ Resources:
       GenerateDistinctId: false
   ApiUsagePlan:
     Type: 'AWS::ApiGateway::UsagePlan'
+    DependsOn:
+      - RestAPIdevStage
     Properties:
       ApiStages:
       - ApiId: !Ref RestAPI
-          # Stage: Stage 
+        Stage: dev 
       UsagePlanName: !Sub '${AWS::StackName}-apiUsagePlan'
-  # ApiUsagePlanKey:
-  #   Type: 'AWS::ApiGateway::UsagePlanKey'
-  #   Properties:
-  #     KeyId: !Ref ApiKey
-  #     KeyType: API_KEY
-  #     UsagePlanId: !Ref ApiUsagePlan
+  ApiUsagePlanKey:
+    Type: 'AWS::ApiGateway::UsagePlanKey'
+    Properties:
+      KeyId: !Ref ApiKey
+      KeyType: API_KEY
+      UsagePlanId: !Ref ApiUsagePlan
   RestAPI:
     Type: 'AWS::Serverless::Api'
     Properties:
-      StageName: prod
+      StageName: dev
       DefinitionBody:
         swagger: '2.0'
         info:
-          title: StudentAPI
+          title: !Sub '${AWS::StackName}-StudentAPI'
         basePath: /
         schemes:
           - https
@@ -59,28 +61,27 @@ Resources:
           /students:
             get:
               response: {}
+              security:
+                - api_key: []
               x-amazon-apigateway-integration:
                 uri: !Sub >-
                   arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${StudentFunction.Arn}/invocations
                 passthroughBehavior: when_no_match
                 httpMethod: POST
                 type: aws_proxy
-        # paths:
-        #   /students:
-        #     any:
-        #       responses: {}
-        #       x-amazon-apigateway-integration:
-        #         uri: !Sub >-
-        #           arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${StudentFunction.Arn}/invocations
-        #         passthroughBehavior: when_no_match
-        #         httpMethod: POST
-        #         type: aws_proxy
-        #   /students/{id}:
-        #     any:
-        #       responses: {}
-        #       x-amazon-apigateway-integration:
-        #         uri: !Sub >-
-        #           arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${StudentFunction.Arn}/invocations
-        #         passthroughBehavior: when_no_match
-        #         httpMethod: POST
-        #         type: aws_proxy
+          /students/{id}:
+            get:
+              response: {}
+              security:
+                - api_key: []
+              x-amazon-apigateway-integration:
+                uri: !Sub >-
+                  arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${StudentFunction.Arn}/invocations
+                passthroughBehavior: when_no_match
+                httpMethod: POST
+                type: aws_proxy
+        securityDefinitions: 
+         api_key: 
+          type: apiKey
+          name: x-api-key
+          in: header
