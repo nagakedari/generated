@@ -7,7 +7,10 @@ class DBUtil {
         if (cachedDb && cachedDb.serverConfig.isConnected()) {
             return Promise.resolve(cachedDb);
         }
-        cachedDb = await mongoose.connect(process.env.DBURL, { useNewUrlParser: true });
+        let dbUrl = 'mongodb+srv://' + process.env.MongoUser + ':' + process.env.MongoPwd + '@' + 
+                    process.env.MongoCluster + '/' + process.env.MongoDBName;
+        console.log('URLLLLLLLLLL...........................:',dbUrl)
+        cachedDb = await mongoose.connect(dbUrl, { useNewUrlParser: true });
         return cachedDb;
     }
 }

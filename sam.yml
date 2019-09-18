@@ -23,7 +23,10 @@ Resources:
             Path: /students/{id}
       Environment:
         Variables:
-          DBURL: 'mongodb+srv://mongo_user:wAAbUC36OzKcm0hN@cluster0-knpmq.mongodb.net/boilerplate'
+          MongoUser: '{{resolve:ssm:mongo_user}}'
+          MongoPwd: '{{resolve:ssm-secure:mongo_password}}'
+          MongoCluster: 'cluster0-knpmq.mongodb.net'
+          MongoDBName: 'boilerplate'
   ApiKey:
     Type: 'AWS::ApiGateway::ApiKey'
     Properties:
