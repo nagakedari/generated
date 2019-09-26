@@ -23,8 +23,8 @@ Resources:
             Path: /students/{id}
       Environment:
         Variables:
-          MongoUser: '{{resolve:ssm:mongo_user}}'
-          MongoPwd: '{{resolve:ssm-secure:mongo_password}}'
+          MongoUser: "{{resolve:ssm:mongo_user:1}}"
+          # MongoPwd: '{{resolve:ssm-secure:mongo_password}}'
           MongoCluster: 'cluster0-knpmq.mongodb.net'
           MongoDBName: 'boilerplate'
   ApiKey:
@@ -88,3 +88,29 @@ Resources:
           type: apiKey
           name: x-api-key
           in: header
+  SSMParametersRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument: 
+        Version: 2012-10-17
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - lambda.amazonaws.com
+          Action:
+          - sts:AssumeRole
+  SSMParametersRolePolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: SSMReadOnlyPolicy
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+        - Effect: Allow
+          Action:
+          - ssm:GetParameters
+          - ssm:GetParameter
+          Resource: !GetAtt StudentFunction.Arn
+      Roles:
+      - !Ref SSMParametersRole

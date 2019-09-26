@@ -1,6 +1,7 @@
 pipeline {
     environment {
-        credentialsId = '8829efd3-1754-460b-9a1a-fa7755e1d212'
+        // credentialsId = '8829efd3-1754-460b-9a1a-fa7755e1d212'
+        credentialsId = 'AWS_CLI_ID'
         region = 'us-east-1'
         stackName = 'dev'
         bucketName = '-deployartifacts3bucket'
