@@ -10,7 +10,7 @@ class DBUtil {
         }
         let password = this.getMongoDbPasswordFromParameterStore('mongo_password');
         console.log('username Parameter from store ********* ',process.env.MongoUser);
-        let dbUrl = 'mongodb+srv://' + process.env.MongoUser + ':' + process.env.MongoPwd + '@' + 
+        let dbUrl = 'mongodb+srv://' + process.env.MongoUser + ':' + password + '@' + 
                     process.env.MongoCluster + '/' + process.env.MongoDBName;
         console.log('URLLLLLLLLLL...........................:',dbUrl)
         cachedDb = await mongoose.connect(dbUrl, { useNewUrlParser: true });
