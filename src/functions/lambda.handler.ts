@@ -61,6 +61,7 @@ export const handler: Handler = async (event: APIGatewayEvent, context: Context,
             headers: {},
             body: JSON.stringify(err)
         }
+        console.log("#################err:", err);
         logger.debug(errObj.body);
         cb(null, errObj);
     }
