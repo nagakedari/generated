@@ -3,7 +3,7 @@ import { logMethod } from "../logging/logger";
 import * as AWS from 'aws-sdk';
 
 class DBUtil {
-    @logMethod
+    // @logMethod
     static async connectToDatabase(cachedDb) {
         console.log('****************************log:',14);
         if (cachedDb && cachedDb.serverConfig.isConnected()) {
@@ -22,7 +22,7 @@ class DBUtil {
         return Promise.resolve(cachedDb);
     }
 
-    @logMethod
+    // @logMethod
     static async getMongoDbPasswordFromParameterStore(parameterName: string): Promise<any> {
         let parameterResponse;
        try {
