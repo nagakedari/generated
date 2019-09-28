@@ -11,11 +11,13 @@ class DBUtil {
             return Promise.resolve(cachedDb);
         }
         console.log('****************************log:',16);
-        let password = this.getMongoDbPasswordFromParameterStore('mongo_password');
-        console.log('username Parameter from store ********* ',process.env.MongoUser);
-        let dbUrl = 'mongodb+srv://' + process.env.MongoUser + ':' + password + '@' + 
-                    process.env.MongoCluster + '/' + process.env.MongoDBName;
-        console.log('URLLLLLLLLLL...........................:',dbUrl)
+        // let password = this.getMongoDbPasswordFromParameterStore('mongo_password');
+        // console.log('username Parameter from store ********* ',process.env.MongoUser);
+        // let dbUrl = 'mongodb+srv://' + process.env.MongoUser + ':' + password + '@' + 
+        //             process.env.MongoCluster + '/' + process.env.MongoDBName;
+        // console.log('URLLLLLLLLLL...........................:',dbUrl)
+
+        let dbUrl = 'mongodb+srv://mongo_user:wAAbUC36OzKcm0hN@cluster0-knpmq.mongodb.net/boilerplate';
         cachedDb = await mongoose.connect(dbUrl, { useNewUrlParser: true });
         return cachedDb;
     }
