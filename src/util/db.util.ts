@@ -22,17 +22,17 @@ class DBUtil {
         return Promise.resolve(cachedDb);
     }
 
-    @logMethod
-    static async getMongoDbPasswordFromParameterStore(parameterName: string): Promise<any> {
+    // @logMethod
+    // static async getMongoDbPasswordFromParameterStore(parameterName: string): Promise<any> {
        
-            let ssmAgent = new AWS.SSM();
-            let params = {
-                Name: parameterName, 
-                WithDecryption: true
-              };
-            let parameterResponse = await ssmAgent.getParameter(params);
-            console.log('Password Parameter from store ********* ',parameterResponse);
-    }
+    //         let ssmAgent = new AWS.SSM();
+    //         let params = {
+    //             Name: parameterName, 
+    //             WithDecryption: true
+    //           };
+    //         let parameterResponse = await ssmAgent.getParameter(params);
+    //         console.log('Password Parameter from store ********* ',parameterResponse);
+    // }
 }
 
 export {
