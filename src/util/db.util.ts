@@ -27,7 +27,10 @@ class DBUtil {
         return new Promise((resolve, reject) => {
             let parameterResponse;
             try {
-                let ssmAgent = new AWS.SSM();
+                // AWS.config = {
+                //     region: "us-east-1"
+                // }
+                let ssmAgent = new AWS.SSM({apiVersion: '2014-11-06'});
                 let params = {
                     Name: parameterName,
                     WithDecryption: true
