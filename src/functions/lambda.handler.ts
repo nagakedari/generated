@@ -53,7 +53,8 @@ export const handler: Handler = async (event: APIGatewayEvent, context: Context,
         //     }
         // }
         console.log('****************************log:',13);
-        return cb(null, { statusCode: 200, body: JSON.stringify(result) });
+        cb(null, { statusCode: 200, body: JSON.stringify(result) });
+        return;
         // return isValidHttpMethod ? cb(null, { statusCode: 200, body: JSON.stringify(result) }) : cb(null, { statusCode: 405, body: JSON.stringify({ message: `${METHOD_NOT_ALLOWED}` }) });
     } catch (err) {
         let errObj = {
