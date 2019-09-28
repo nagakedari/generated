@@ -44,7 +44,6 @@ class DBUtil {
                         resolve(data);
                         console.log('Password Parameter from store ********* ', data);
                     }
-
                 });
 
             } catch (e) {

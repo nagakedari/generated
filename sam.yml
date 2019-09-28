@@ -8,6 +8,7 @@ Resources:
       Handler: index.handler
       CodeUri: ./dist/api.zip
       Runtime: nodejs8.10
+      Role: !GetAtt StudentLambdaExecutionRole.Arn
       Events:
         CollectionApi:
           Type: Api
@@ -88,7 +89,7 @@ Resources:
           type: apiKey
           name: x-api-key
           in: header
-  SSMParametersRole:
+  StudentLambdaExecutionRole:
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument: 
@@ -100,6 +101,8 @@ Resources:
             - lambda.amazonaws.com
           Action:
           - sts:AssumeRole
+      ManagedPolicyArns:
+      - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
   SSMParametersRolePolicy:
     Type: AWS::IAM::Policy
     Properties:
@@ -111,6 +114,5 @@ Resources:
           Action:
           - ssm:GetParameters
           - ssm:GetParameter
-          Resource: !GetAtt StudentFunction.Arn
       Roles:
-      - !Ref SSMParametersRole
+      - !Ref StudentLambdaExecutionRole
