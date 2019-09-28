@@ -32,26 +32,26 @@ export const handler: Handler = async (event: APIGatewayEvent, context: Context,
         let path: string = event[PATH];
         console.log('****************************log:',6);
         let result, isValidHttpMethod: boolean;
-        if (id) {
-            console.log('****************************log:',7);
-            if (httpMethod in itemHandlers) {
-                console.log('****************************log:',8);
-                isValidHttpMethod = true;
-                let lastIndex = path.lastIndexOf('/');
-                let operation: string = path.substring(1, lastIndex);
-                result = await itemHandlers[httpMethod][operation](id);
-                console.log('****************************log:',9);
-            }
-        } else {
-            console.log('****************************log:',10);
-            if (httpMethod in collectionHandlers) {
-                console.log('****************************log:',11);
-                isValidHttpMethod = true;
-                let operation: string = path.split('/').pop();
-                result = await collectionHandlers[httpMethod][operation]();
-                console.log('****************************log:',12);
-            }
-        }
+        // if (id) {
+        //     console.log('****************************log:',7);
+        //     if (httpMethod in itemHandlers) {
+        //         console.log('****************************log:',8);
+        //         isValidHttpMethod = true;
+        //         let lastIndex = path.lastIndexOf('/');
+        //         let operation: string = path.substring(1, lastIndex);
+        //         result = await itemHandlers[httpMethod][operation](id);
+        //         console.log('****************************log:',9);
+        //     }
+        // } else {
+        //     console.log('****************************log:',10);
+        //     if (httpMethod in collectionHandlers) {
+        //         console.log('****************************log:',11);
+        //         isValidHttpMethod = true;
+        //         let operation: string = path.split('/').pop();
+        //         result = await collectionHandlers[httpMethod][operation]();
+        //         console.log('****************************log:',12);
+        //     }
+        // }
         console.log('****************************log:',13);
         if(isValidHttpMethod) {
             cb(null, { statusCode: 200, body: JSON.stringify(result) });
