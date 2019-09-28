@@ -24,16 +24,21 @@ class DBUtil {
 
     @logMethod
     static async getMongoDbPasswordFromParameterStore(parameterName: string): Promise<any> {
-       
-            let ssmAgent = new AWS.SSM();
-            let params = {
-                Name: parameterName, 
-                WithDecryption: true
-              };
-            console.log('Before Invoking Parameter from store ********* ');
-            let parameterResponse = await ssmAgent.getParameter(params);
-            console.log('Password Parameter from store ********* ',parameterResponse);
-            return Promise.resolve(parameterResponse);
+        let parameterResponse;
+       try {
+        let ssmAgent = new AWS.SSM();
+        let params = {
+            Name: parameterName, 
+            WithDecryption: true
+          };
+        console.log('Before Invoking Parameter from store ********* ');
+        parameterResponse = await ssmAgent.getParameter(params);
+        console.log('Password Parameter from store ********* ',parameterResponse);
+        
+       } catch (e){
+           console.log('Exception while invoking the parameter store', e);
+       }
+       return Promise.resolve(parameterResponse);
     }
 }
 
