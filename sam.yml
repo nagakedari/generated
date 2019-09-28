@@ -114,6 +114,6 @@ Resources:
           Action:
           - ssm:GetParameters
           - ssm:GetParameter
-      Resource: '*'
+          Resource: '*'
       Roles:
       - !Ref StudentLambdaExecutionRole
