@@ -55,10 +55,11 @@ export const handler: Handler = async (event: APIGatewayEvent, context: Context,
         console.log('****************************log:',13);
         if(isValidHttpMethod) {
             cb(null, { statusCode: 200, body: JSON.stringify(result) });
+            return; 
         } else {
             cb(null, { statusCode: 405, body: JSON.stringify({ message: `${METHOD_NOT_ALLOWED}` }) });
+            return; 
         }
-        return; 
     } catch (err) {
         let errObj = {
             isBase64Encoded: false,
