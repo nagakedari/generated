@@ -26,7 +26,7 @@ class DBUtil {
         console.debug('URLLLLLLLLLL...........................:', dbUrls)
 
         let dbUrl = 'mongodb+srv://mongo_user:wAAbUC36OzKcm0hN@cluster0-knpmq.mongodb.net/boilerplate';
-        cachedDb = await mongoose.connect(dbUrl, { useNewUrlParser: true });
+        // cachedDb = await mongoose.connect(dbUrl, { useNewUrlParser: true });
         return Promise.resolve(cachedDb);
         }
         catch(e){
