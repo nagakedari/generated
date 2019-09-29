@@ -112,7 +112,6 @@ Resources:
         Statement:
         - Effect: Allow
           Action:
-          - ssm:GetParameters
           - ssm:GetParameter
           Resource: '*'
       Roles:
