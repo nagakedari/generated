@@ -21,7 +21,7 @@ let collectionHandlers = {
 export const handler: Handler = async (event: APIGatewayEvent, context: Context, cb: Callback) => {
     try {
         context.callbackWaitsForEmptyEventLoop = false;
-        await DBUtil.connectToDatabase(cachedDb);
+        //await DBUtil.connectToDatabase(cachedDb);
         let id = (event[PATH_PARAMETERS] && ID in event[PATH_PARAMETERS]) ? event[PATH_PARAMETERS][ID] : undefined;
         let httpMethod: string = event[HTTP_METHOD];
         let path: string = event[PATH];
