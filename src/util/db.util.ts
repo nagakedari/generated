@@ -11,7 +11,13 @@ class DBUtil {
             return Promise.resolve(cachedDb);
         }
         console.log('****************************log:', 16);
-        let password = await this.getMongoDbPasswordFromParameterStore('mongo_password');
+        let ssmAgent = new AWS.SSM();
+                let params = {
+                    Name: 'mongo_password',
+                    WithDecryption: true
+                };
+        let password = await ssmAgent.getParameter(params).promise();
+        console.log('*****************password******** ', password);
         console.log('username Parameter from store ********* ', process.env.MongoUser);
         let dbUrls = 'mongodb+srv://' + process.env.MongoUser + ':' + password + '@' +
             process.env.MongoCluster + '/' + process.env.MongoDBName;
@@ -23,35 +29,33 @@ class DBUtil {
     }
 
     // @logMethod
-    static getMongoDbPasswordFromParameterStore(parameterName: string): Promise<any> {
-        return new Promise((resolve, reject) => {
-            let parameterResponse;
-            try {
-                // AWS.config = {
-                //     region: "us-east-1"
-                // }
-                let ssmAgent = new AWS.SSM({apiVersion: '2014-11-06'});
-                let params = {
-                    Name: parameterName,
-                    WithDecryption: true
-                };
-                console.log('Before Invoking Parameter from store ********* ');
-                ssmAgent.getParameter(params, function (err, data) {
-                    if (err) {
-                        console.log('errrrrrrrrrrrrrrr******* ', err);
-                        reject(err);
-                    } else {
-                        resolve(data);
-                        console.log('Password Parameter from store ********* ', data);
-                    }
-                });
+    // static async getMongoDbPasswordFromParameterStore(parameterName: string): Promise<any> {
+    //     // return new Promise((resolve, reject) => {
+    //         let response;
+    //         try {
+    //             let ssmAgent = new AWS.SSM();
+    //             let params = {
+    //                 Name: parameterName,
+    //                 WithDecryption: true
+    //             };
+    //             console.log('Before Invoking Parameter from store ********* ');
+    //             // ssmAgent.getParameter(params, function (err, data) {
+    //             //     if (err) {
+    //             //         console.log('errrrrrrrrrrrrrrr******* ', err);
+    //             //         reject(err);
+    //             //     } else {
+    //             //         resolve(data);
+    //             //         console.log('Password Parameter from store ********* ', data);
+    //             //     }
+    //             // });
+    //         response = await ssmAgent.getParameter(params).promise( );
 
-            } catch (e) {
-                console.log('Exception while invoking the parameter store', e);
-            }
-        });
-
-    }
+    //         } catch (e) {
+    //             console.log('Exception while invoking the parameter store', e);
+    //         }
+    //     // });
+    // return response.Parameter.Value;
+    // }
 }
 
 export {
