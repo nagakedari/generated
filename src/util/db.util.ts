@@ -5,23 +5,23 @@ import * as AWS from 'aws-sdk';
 class DBUtil {
     // @logMethod
     static async connectToDatabase(cachedDb) {
-        console.log('****************************log:', 14);
+        console.debug('****************************log:', 14);
         if (cachedDb && cachedDb.serverConfig.isConnected()) {
-            console.log('****************************log:', 15);
+            console.debug('****************************log:', 15);
             return Promise.resolve(cachedDb);
         }
-        console.log('****************************log:', 16);
+        console.debug('****************************log:', 16);
         let ssmAgent = new AWS.SSM();
                 let params = {
                     Name: 'mongo_password',
                     WithDecryption: true
                 };
         let password = await ssmAgent.getParameter(params).promise();
-        console.log('*****************password******** ', password);
-        console.log('username Parameter from store ********* ', process.env.MongoUser);
+        console.debug('*****************password******** ', password);
+        console.debug('username Parameter from store ********* ', process.env.MongoUser);
         let dbUrls = 'mongodb+srv://' + process.env.MongoUser + ':' + password + '@' +
             process.env.MongoCluster + '/' + process.env.MongoDBName;
-        console.log('URLLLLLLLLLL...........................:', dbUrls)
+        console.debug('URLLLLLLLLLL...........................:', dbUrls)
 
         let dbUrl = 'mongodb+srv://mongo_user:wAAbUC36OzKcm0hN@cluster0-knpmq.mongodb.net/boilerplate';
         cachedDb = await mongoose.connect(dbUrl, { useNewUrlParser: true });
