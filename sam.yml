@@ -103,16 +103,17 @@ Resources:
           - sts:AssumeRole
       ManagedPolicyArns:
       - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
-  SSMParametersRolePolicy:
-    Type: AWS::IAM::Policy
-    Properties:
-      PolicyName: SSMReadOnlyPolicy
-      PolicyDocument:
-        Version: '2012-10-17'
-        Statement:
-        - Effect: Allow
-          Action:
-          - ssm:GetParameter
-          Resource: '*'
-      Roles:
-      - !Ref StudentLambdaExecutionRole
+      - arn:aws:iam::aws:policy/AmazonSSMReadOnlyAccess
+  # SSMParametersRolePolicy:
+  #   Type: AWS::IAM::Policy
+  #   Properties:
+  #     PolicyName: SSMReadOnlyPolicy
+  #     PolicyDocument:
+  #       Version: '2012-10-17'
+  #       Statement:
+  #       - Effect: Allow
+  #         Action:
+  #         - ssm:GetParameter
+  #         Resource: '*'
+  #     Roles:
+  #     - !Ref StudentLambdaExecutionRole
