@@ -57,6 +57,7 @@ function logMethod(target: Function, propertyKey: string | symbol, descriptor: T
             }
             return result;
         } catch (err) {
+            console.log('================================Exception in Logger================', err);
             let exceptionMessage = 'Exception occured in: ' + target.name + '.' + propertyKey.toString() + '\n';
             logger.debug(exceptionMessage);
             logger.debug(err.toString());

@@ -5,7 +5,8 @@ import * as AWS from 'aws-sdk';
 class DBUtil {
     // @logMethod
     static async connectToDatabase(cachedDb) {
-        console.debug('****************************log:', 14);
+        try{
+            console.debug('****************************log:', 14);
         if (cachedDb && cachedDb.serverConfig.isConnected()) {
             console.debug('****************************log:', 15);
             return Promise.resolve(cachedDb);
@@ -27,6 +28,10 @@ class DBUtil {
         let dbUrl = 'mongodb+srv://mongo_user:wAAbUC36OzKcm0hN@cluster0-knpmq.mongodb.net/boilerplate';
         cachedDb = await mongoose.connect(dbUrl, { useNewUrlParser: true });
         return Promise.resolve(cachedDb);
+        }
+        catch(e){
+            console.log('########Error in DB Utils##########', e);
+        }
     }
 
     // @logMethod
