@@ -21,8 +21,8 @@ class DBUtil {
         // let password = await ssmAgent.getParameter(params).promise();
         // console.debug('*****************password******** ', password);
         // console.debug('username Parameter from store ********* ', process.env.MongoUser);
-        let dbUrls = 'mongodb+srv://' + process.env.MongoUser + ':' + password + '@' +
-            process.env.MongoCluster + '/' + process.env.MongoDBName;
+        // let dbUrls = 'mongodb+srv://' + process.env.MongoUser + ':' + password + '@' +
+        //     process.env.MongoCluster + '/' + process.env.MongoDBName;
         // console.debug('URLLLLLLLLLL...........................:', dbUrls)
 
         let dbUrl = 'mongodb+srv://mongo_user:wAAbUC36OzKcm0hN@cluster0-knpmq.mongodb.net/boilerplate';
