@@ -8,7 +8,7 @@ class DBUtil {
         if (cachedDb && cachedDb.serverConfig.isConnected()) {
             return Promise.resolve(cachedDb);
         }
-        // let ssmAgent = new AWS.SSM();
+        let ssmAgent = new AWS.SSM();
         //         let params = {
         //             Name: 'mongo_password',
         //             WithDecryption: true
