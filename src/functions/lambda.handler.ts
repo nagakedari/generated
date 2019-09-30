@@ -21,7 +21,7 @@ let collectionHandlers = {
 export const handler: Handler = async (event: APIGatewayEvent, context: Context, cb: Callback) => {
     try {
         context.callbackWaitsForEmptyEventLoop = false;
-        //await DBUtil.connectToDatabase(cachedDb);
+        await DBUtil.connectToDatabase(cachedDb);
         let id = (event[PATH_PARAMETERS] && ID in event[PATH_PARAMETERS]) ? event[PATH_PARAMETERS][ID] : undefined;
         let httpMethod: string = event[HTTP_METHOD];
         let path: string = event[PATH];
@@ -40,9 +40,17 @@ export const handler: Handler = async (event: APIGatewayEvent, context: Context,
                 result = await collectionHandlers[httpMethod][operation]();
             }
         }
-        return isValidHttpMethod ? cb(null, { statusCode: 200, body: JSON.stringify(result) }) : cb(null, { statusCode: 405, body: JSON.stringify({ message: `${METHOD_NOT_ALLOWED}` }) });
+        if(isValidHttpMethod) {
+            logger.debug('********Inside Valid Result****** '+result);
+            cb(null, { statusCode: 200, body: JSON.stringify(result) });
+        } else {
+            logger.debug('********Not a valid result****** ');
+            cb(null, { statusCode: 405, body: JSON.stringify({ message: `${METHOD_NOT_ALLOWED}` }) });
+        }
+        return;
+        // return isValidHttpMethod ? cb(null, { statusCode: 200, body: JSON.stringify(result) }) : cb(null, { statusCode: 405, body: JSON.stringify({ message: `${METHOD_NOT_ALLOWED}` }) });
     } catch (err) {
-        console.log('ERROR caught in handler *****', err);
+        logger.debug('ERROR caught in handler *****'+ err);
         let errObj = {
             isBase64Encoded: false,
             statusCode: 500,
