@@ -46,6 +46,7 @@
     },
     "dependencies": {
         "aws-lambda": "^0.1.2",
+        "aws-param-store": "^3.0.0",
         "aws-sdk": "^2.533.0",
         "moment": "^2.24.0",
         "mongoose": "^5.5.11"
