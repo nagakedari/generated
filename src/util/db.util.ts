@@ -1,7 +1,6 @@
 import * as mongoose from "mongoose";
 import { logMethod } from "../logging/logger";
 import * as AWS from 'aws-sdk';
-import * as paramStore from 'aws-param-store';
 
 class DBUtil {
     @logMethod
@@ -9,13 +8,13 @@ class DBUtil {
         if (cachedDb && cachedDb.serverConfig.isConnected()) {
             return Promise.resolve(cachedDb);
         }
-        //let ssmAgent = new AWS.SSM();
+        let ssmAgent = new AWS.SSM();
                 let params = {
                     Name: 'mongo_password',
                     WithDecryption: true
                 };
         // let password;
-        let password = await paramStore.getParameter(params).promise();
+        // let password = await paramStore.getParameter(params).promise();
         console.debug('*****************password******** ', password);
         // console.debug('username Parameter from store ********* ', process.env.MongoUser);
         // let dbUrls = 'mongodb+srv://' + process.env.MongoUser + ':' + password + '@' +
