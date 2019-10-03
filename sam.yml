@@ -8,7 +8,7 @@ Resources:
       Handler: index.handler
       CodeUri: ./dist/api.zip
       Runtime: nodejs8.10
-      Role: !GetAtt StudentLambdaExecutionRole.Arn
+      Role: !GetAtt StudentLambdaFunctionRole.Arn
       Events:
         CollectionApi:
           Type: Api
@@ -89,7 +89,7 @@ Resources:
           type: apiKey
           name: x-api-key
           in: header
-  StudentLambdaExecutionRole:
+  StudentLambdaFunctionRole:
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument: 
@@ -101,28 +101,34 @@ Resources:
             - lambda.amazonaws.com
           Action:
           - sts:AssumeRole
-      ManagedPolicyArns:
-      - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
-      # - arn:aws:iam::aws:policy/AmazonSSMReadOnlyAccess
       Policies:
-      - PolicyName: 'ParameterStoreBlogDevParameterAccess'
-        PolicyDocument:
-          Version: '2012-10-17'
-          Statement:
-          - Effect: Allow
-            Action:
-            - 'ssm:GetParameter*'
-            Resource: !Sub 'arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter*'
-  # SSMParametersRolePolicy:
-  #   Type: AWS::IAM::Policy
-  #   Properties:
-  #     PolicyName: SSMReadOnlyPolicy
-  #     PolicyDocument:
-  #       Version: '2012-10-17'
-  #       Statement:
-  #       - Effect: Allow
-  #         Action:
-  #         - ssm:GetParameter
-  #         Resource: '*'
-  #     Roles:
-  #     - !Ref StudentLambdaExecutionRole
+      - !Ref StudentFuctionPolicy
+      # ManagedPolicyArns:
+      # - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      # - arn:aws:iam::aws:policy/AmazonSSMReadOnlyAccess
+      # Policies:
+      # - PolicyName: 'ParameterStoreBlogDevParameterAccess'
+      #   PolicyDocument:
+      #     Version: '2012-10-17'
+      #     Statement:
+      #     - Effect: Allow
+      #       Action:
+      #       - 'ssm:GetParameter*'
+      #       Resource: !Sub 'arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter*'
+  StudentFuctionPolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: StudentFuctionPolicy
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Action:
+          - ssm:GetParameter
+          - logs:CreateLogStream
+          - logs:PutLogEvents
+          Resource:
+          - !Sub 'arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/*'
+          - !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/${StudentFunction.Arn}:*'
+      # Roles:
+      # - !Ref StudentLambdaExecutionRole

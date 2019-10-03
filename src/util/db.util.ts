@@ -14,7 +14,7 @@ class DBUtil {
                     WithDecryption: true
                 };
         // let password;
-        // let password = await paramStore.getParameter(params).promise();
+        let password = await ssmAgent.getParameter(params);
         console.debug('*****************password******** ', password);
         // console.debug('username Parameter from store ********* ', process.env.MongoUser);
         // let dbUrls = 'mongodb+srv://' + process.env.MongoUser + ':' + password + '@' +
