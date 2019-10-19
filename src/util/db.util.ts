@@ -9,9 +9,6 @@ class DBUtil {
         }
         let dbUrl = 'mongodb+srv://' + process.env.MongoUser + ':' + process.env.MongoPwd + '@' +
             process.env.MongoCluster + '/' + process.env.MongoDBName;
-        console.debug('URLLLLLLLLLL...........................:', dbUrl);
-
-        // let dbUrl = 'mongodb+srv://mongo_user:wAAbUC36OzKcm0hN@cluster0-knpmq.mongodb.net/boilerplate';
         cachedDb = await mongoose.connect(dbUrl, { useNewUrlParser: true });
         return Promise.resolve(cachedDb);
     }

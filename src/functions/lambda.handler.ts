@@ -41,14 +41,11 @@ export const handler: Handler = async (event: APIGatewayEvent, context: Context,
             }
         }
         if(isValidHttpMethod) {
-            logger.debug('********Inside Valid Result****** '+result);
             cb(null, { statusCode: 200, body: JSON.stringify(result) });
         } else {
-            logger.debug('********Not a valid result****** ');
             cb(null, { statusCode: 405, body: JSON.stringify({ message: `${METHOD_NOT_ALLOWED}` }) });
         }
         return;
-        // return isValidHttpMethod ? cb(null, { statusCode: 200, body: JSON.stringify(result) }) : cb(null, { statusCode: 405, body: JSON.stringify({ message: `${METHOD_NOT_ALLOWED}` }) });
     } catch (err) {
         logger.debug('ERROR caught in handler *****'+ err);
         let errObj = {

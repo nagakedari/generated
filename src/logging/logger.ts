@@ -38,10 +38,8 @@ function logMethod(target: Function, propertyKey: string | symbol, descriptor: T
             let startTime = moment();
             let duration;
             result = originalMethod.apply(this, args);
-            logger.debug('********result****** '+ result);
             if (result instanceof Promise) {
                 result.then(() => {
-                    logger.debug('********Promise Resolved****** ');
                     duration = moment.duration(moment().diff(startTime));
                     let exitMessage: string = 'Method exit: ' + target.name + '.' + propertyKey.toString();
                     exitMessage += '. Took ' + duration.asMilliseconds() + ' milli seconds';
@@ -52,7 +50,6 @@ function logMethod(target: Function, propertyKey: string | symbol, descriptor: T
                     logger.debug(err.toString());
                 });
             } else {
-                logger.debug('********Not a Promise****** ');
                 duration = moment.duration(moment().diff(startTime));
                 let exitMessage: string = 'Method exit: ' + target.name + '.' + propertyKey.toString();
                 exitMessage += '. Took ' + duration.asMilliseconds() + ' milli seconds';
