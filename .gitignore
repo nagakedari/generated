@@ -1,2 +1,5 @@
 dist
 node_modules
+serverless-output.yml
+serverless-out.yaml
+out

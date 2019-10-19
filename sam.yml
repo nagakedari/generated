@@ -25,7 +25,7 @@ Resources:
       Environment:
         Variables:
           MongoUser: "{{resolve:ssm:mongo_user:1}}"
-          # MongoPwd: '{{resolve:ssm-secure:mongo_password}}'
+          MongoPwd: "{{resolve:ssm:mongo_password:1}}"
           MongoCluster: 'cluster0-knpmq.mongodb.net'
           MongoDBName: 'boilerplate'
   ApiKey:
@@ -101,34 +101,6 @@ Resources:
             - lambda.amazonaws.com
           Action:
           - sts:AssumeRole
-      Policies:
-      - !Ref StudentFuctionPolicy
-      # ManagedPolicyArns:
-      # - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
-      # - arn:aws:iam::aws:policy/AmazonSSMReadOnlyAccess
-      # Policies:
-      # - PolicyName: 'ParameterStoreBlogDevParameterAccess'
-      #   PolicyDocument:
-      #     Version: '2012-10-17'
-      #     Statement:
-      #     - Effect: Allow
-      #       Action:
-      #       - 'ssm:GetParameter*'
-      #       Resource: !Sub 'arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter*'
-  StudentFuctionPolicy:
-    Type: AWS::IAM::Policy
-    Properties:
-      PolicyName: StudentFuctionPolicy
-      PolicyDocument:
-        Version: '2012-10-17'
-        Statement:
-        - Effect: Allow
-          Action:
-          - ssm:GetParameter
-          - logs:CreateLogStream
-          - logs:PutLogEvents
-          Resource:
-          - !Sub 'arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/*'
-          - !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/${StudentFunction.Arn}:*'
-      # Roles:
-      # - !Ref StudentLambdaExecutionRole
+      ManagedPolicyArns:
+      - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      - arn:aws:iam::aws:policy/AmazonSSMReadOnlyAccess
