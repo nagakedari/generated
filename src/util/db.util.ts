@@ -7,7 +7,7 @@ class DBUtil {
         if (cachedDb && cachedDb.serverConfig.isConnected()) {
             return Promise.resolve(cachedDb);
         }
-        let dbUrl = 'mongodb+srv://' + process.env.MongoUser + ':' + process.env.Mongo + '@' +
+        let dbUrl = 'mongodb+srv://' + process.env.MongoUser + ':' + process.env.MongoPwd + '@' +
             process.env.MongoCluster + '/' + process.env.MongoDBName;
         console.debug('URLLLLLLLLLL...........................:', dbUrl);
 
