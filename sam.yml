@@ -38,11 +38,11 @@ Resources:
   ApiUsagePlan:
     Type: 'AWS::ApiGateway::UsagePlan'
     DependsOn:
-      - RestAPIdevStage
+      - !Sub 'RestAPI${AWS::StackName}Stage'
     Properties:
       ApiStages:
       - ApiId: !Ref RestAPI
-        Stage: dev 
+        Stage: !Sub '${AWS::StackName}'
       UsagePlanName: !Sub '${AWS::StackName}-apiUsagePlan'
   ApiUsagePlanKey:
     Type: 'AWS::ApiGateway::UsagePlanKey'
@@ -53,7 +53,7 @@ Resources:
   RestAPI:
     Type: 'AWS::Serverless::Api'
     Properties:
-      StageName: dev
+      StageName: !Sub '${AWS::StackName}'
       DefinitionBody:
         swagger: '2.0'
         info:
